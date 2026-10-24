@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0d12">
+<title>PROJECT: US // LEVEL 02</title>
+<style>
+:root{--bg:#090b10;--panel:#10151d;--panel2:#151c27;--green:#80ffb0;--pink:#ff78c8;--cyan:#80e7ff;--text:#e8f0f5;--muted:#8b9aa7;--line:#293544;--amber:#ffd479}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 15% 0%,#172333 0,transparent 35%),radial-gradient(circle at 90% 20%,#24142c 0,transparent 30%),var(--bg);color:var(--text);font:15px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.wrap{width:min(900px,100%);margin:auto;padding:22px 16px 60px;position:relative}
+.top{display:flex;justify-content:space-between;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0 16px;color:var(--muted);font-size:11px;letter-spacing:.12em}
+.status{color:var(--green)}.window{border:1px solid var(--line);background:#0c1017eF;border-radius:14px;overflow:hidden;box-shadow:0 20px 70px #0006}
+.windowbar{display:flex;align-items:center;gap:7px;padding:12px 15px;background:#151b25;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:#ff6b79}.dot:nth-child(2){background:#ffd479}.dot:nth-child(3){background:#80ffb0}
+.content{padding:clamp(20px,5vw,44px)}
+.eyebrow{font-size:11px;letter-spacing:.18em;color:var(--green);text-transform:uppercase}
+h1{font-size:clamp(28px,7vw,56px);line-height:1.08;margin:14px 0;color:#fff;letter-spacing:-.06em}
+h1 span{color:var(--pink);text-shadow:0 0 25px #ff78c844}
+h2{font-size:clamp(20px,4vw,28px);line-height:1.25;margin:0 0 12px;color:#fff}
+p{margin:8px 0 16px}.muted{color:var(--muted)}.green{color:var(--green)}.pink{color:var(--pink)}.cyan{color:var(--cyan)}
+.hero-copy{max-width:610px;color:#b7c4cf}
+.progress{height:5px;background:#202a35;border-radius:9px;overflow:hidden;margin:20px 0 8px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--cyan));transition:width .3s}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+button,.button{font:inherit;cursor:pointer;border:1px solid var(--green);border-radius:8px;padding:11px 15px;background:#80ffb014;color:var(--green);transition:.18s;text-align:center}
+button:hover,.button:hover{transform:translateY(-1px);background:#80ffb025}
+button.secondary{border-color:var(--line);color:#c4d0d9;background:#ffffff05}
+button.pinkbtn{border-color:var(--pink);color:var(--pink);background:#ff78c811}
+section{display:none;animation:enter .28s ease}section.active{display:block}
+@keyframes enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.terminal-line{color:var(--green);font-size:12px;margin-bottom:20px;word-break:break-word}
+.card{background:linear-gradient(135deg,#141c27,#0e131b);border:1px solid var(--line);border-radius:12px;padding:18px;margin:14px 0}
+.qnum{color:var(--pink);font-size:11px;letter-spacing:.15em;margin-bottom:8px}
+.options{display:grid;gap:9px;margin-top:16px}
+.options button{border-color:#344354;color:#dce6ee;background:#ffffff04;text-align:left}
+.options button.chosen{border-color:var(--cyan);background:#80e7ff14}
+.feedback{min-height:26px;color:var(--amber);font-size:12px;margin-top:10px}
+.photo-frame{border:1px dashed #4b5b6b;border-radius:12px;padding:10px;text-align:center;background:#ffffff04}
+.photo-frame img{display:block;width:100%;max-height:360px;object-fit:cover;border-radius:7px;display:none}
+.photo-placeholder{padding:30px 10px;color:var(--muted)}
+input[type=file]{max-width:100%;font:12px inherit;color:var(--muted);margin:10px 0}
+.reward-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.reward{min-height:120px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;font-size:30px;border-color:#6a3d69;color:var(--pink);background:#ff78c80a}
+.reward small{font-size:11px;color:#c6b4c8}
+.reward.opened{border-color:var(--green);color:var(--green);background:#80ffb010}
+.letter{border:1px solid #4b4054;background:linear-gradient(145deg,#171522,#11141d);border-radius:12px;padding:22px;position:relative}
+.letter:before{content:"CLASSIFIED / FOR YOUR EYES ONLY";display:block;font-size:10px;letter-spacing:.15em;color:var(--pink);margin-bottom:20px}
+.letter p{line-height:1.95}
+.footer{font-size:10px;color:#657482;text-align:center;margin-top:20px;letter-spacing:.08em}
+.heart{display:inline-block;animation:pulse 1.3s infinite}@keyframes pulse{50%{transform:scale(1.2)}}
+@media(max-width:520px){.top{font-size:9px}.content{padding:22px 17px}.reward-grid{gap:6px}.reward{min-height:100px;padding:8px 4px}.reward small{font-size:9px}.btns button{flex:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><span>PROJECT: US // v2.0</span><span class="status">● SYSTEM ONLINE</span></div>
+  <div class="window">
+    <div class="windowbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span style="margin-left:8px">secret-folder/anniversary.exe</span></div>
+    <div class="content">
+      <section id="home" class="active">
+        <div class="eyebrow">[ confidential relationship file ]</div>
+        <h1>PROJECT:<br><span>US</span> // LEVEL 02</h1>
+        <p class="terminal-line">> loading memories...<br>> checking heart status... <span class="pink">100% attached</span></p>
+        <p class="hero-copy">อัปเดตระบบสำเร็จแล้ว: เราเดินทางมาถึงเดือนที่ 2 🎮<br>คำเตือน: ระบบนี้อาจทำให้ยิ้มโดยไม่รู้ตัว และมีผู้ต้องสงสัยหนึ่งคนที่น่ารักเกินไป</p>
+        <div class="card"><div class="muted">CURRENT STATUS</div><strong class="green">● STILL CHOOSING YOU</strong><p class="muted" style="margin-bottom:0">ภารกิจวันนี้: ตอบคำถาม 3 ข้อ แล้วปลดล็อกรางวัลลับ</p></div>
+        <div class="progress"><span style="width:8%"></span></div><div class="muted" style="font-size:11px">MISSION PROGRESS: 0 / 3</div>
+        <div class="btns"><button onclick="go('quiz')">▶ START MISSION</button><button class="secondary" onclick="showHint()">[ ดูคำใบ้ ]</button></div>
+        <p id="hint" class="feedback"></p>
+      </section>
+
+      <section id="quiz">
+        <div class="eyebrow">[ mission 01 / memory scan ]</div>
+        <h2>ตรวจสอบความทรงจำ</h2>
+        <p class="muted">ตอบตามเรื่องราวของเราสองคนได้เลย — ถ้าคำถามไหนไม่ตรง ให้แก้ตัวเลือกในโค้ดได้ 💾</p>
+        <div class="progress"><span id="quizProgress"></span></div>
+        <div id="questionArea"></div>
+        <div class="btns"><button class="secondary" onclick="go('home')">← BACK</button></div>
+      </section>
+
+      <section id="rewards">
+        <div class="eyebrow">[ mission cleared ]</div>
+        <h2>ACCESS GRANTED <span class="green">✓</span></h2>
+        <p>ผ่านการสแกนความทรงจำแล้ว! เลือกกล่องรางวัลหนึ่งกล่องเพื่อเปิดของขวัญลับ 🎁</p>
+        <div class="reward-grid">
+          <button class="reward" onclick="openReward(0,this)">▣<small>BOX 01</small></button>
+          <button class="reward" onclick="openReward(1,this)">▣<small>BOX 02</small></button>
+          <button class="reward" onclick="openReward(2,this)">▣<small>BOX 03</small></button>
+        </div>
+        <div id="rewardText" class="card" style="display:none"></div>
+        <div class="photo-frame">
+          <div class="eyebrow">[ memory attachment ]</div>
+          <h2 style="margin-top:10px">แนบความทรงจำของเรา</h2>
+          <p class="muted" style="font-size:12px">เลือกรูปจากเครื่องเพื่อแสดงในหน้านี้ รูปจะไม่ถูกอัปโหลดหรือส่งให้ใคร</p>
+          <img id="photoPreview" alt="รูปความทรงจำของเรา">
+          <div id="photoPlaceholder" class="photo-placeholder">[ PHOTO SLOT EMPTY ]<br><span class="pink">♡ waiting for our picture ♡</span></div>
+          <input id="photoInput" type="file" accept="image/*" onchange="previewPhoto(event)">
+        </div>
+        <div class="btns"><button onclick="go('letter')">UNLOCK SECRET LETTER →</button><button class="secondary" onclick="go('quiz')">PLAY AGAIN</button></div>
+      </section>
+
+      <section id="letter">
+        <div class="eyebrow">[ final stage / secret ending ]</div>
+        <h2>One little message for you<span class="heart pink"> ♥</span></h2>
+        <div class="letter">
+          <p>ถึงหมาเพชรกล้ามโต,</p>
+          <p>ครบ 2 เดือนแล้วนะ! 🎉</p>
+          <p>เอาจริงพี่ก็ไม่ได้เป็นคนชอบเล่นเกมหรือว่าอะไรหรอก พี่น่ะชอบทำเว็บมากกว่า แต่เห็นเพชรชอบเล่นแต่เกมอะ ไม่รู้ชอบแนวนี้มั้ย ถ้าไม่ถูกใจขออภัยนะจ้ะ 😂</p>
+          <p>แต่ก็ขอบคุณนะ ที่ทำให้มีเรื่องให้ยิ้มได้ตลอดเลย แบบแค่เห็นหน้าก็โกรธไรไม่ลง รู้สึกว่าแฟนหล่อมาก ดีใจที่มีเพชรเป็นแฟน ขอบคุณสำหรับความทรงจำใหม่ ๆ ที่เพิ่มขึ้น</p>
+          <p>เล่นเกมส์นี้จบ ช่วยมารีวิวด้วย 💗</p>
+          <p class="pink">MISSION OBJECTIVE: keep making each other smile.</p>
+          <p>— จากพี่พลอยคนที่ตั้งใจเขียนโค้ดนี้ ♡</p>
+        </div>
+        <div class="card"><span class="green">ACHIEVEMENT UNLOCKED</span><br><strong>2 MONTHS TOGETHER</strong><br><span class="muted">Next update: more memories, more inside jokes.</span></div>
+        <div class="btns"><button onclick="confetti()">♥ SEND VIRTUAL HUG</button><button class="secondary" onclick="go('home')">↻ RESTART</button></div>
+        <p id="hugMessage" class="feedback"></p>
+      </section>
+    </div>
+  </div>
+  <div class="footer">MADE WITH 1 PART CODE + 99 PARTS FEELINGS // KEEP THIS LINK SAFE ♡</div>
+</div>
+<script>
+const questions = [
+ {q:"ข้อ 01 // ใครเป็นคนเริ่มทักก่อน?", options:["พี่พลอย","หมาเพชร","จำไม่ได้แล้ว ขอเริ่มจีบใหม่"], answer:2, note:"เปลี่ยนคำตอบให้ตรงกับเรื่องจริงได้ในโค้ดนะ"},
+ {q:"ข้อ 02 // ถ้าเราได้เดตกันอีก อยากทำอะไรที่สุด?", options:["ไปกินของอร่อย","เดินเล่นแล้วคุยกัน","อะไรก็ได้ถ้าได้อยู่ด้วยกัน"], answer:2, note:"คำถามนี้เลือกคำตอบไหนก็ได้ น่ารักหมด"},
+ {q:"ข้อ 03 // ภารกิจสำคัญของ Level 02 คืออะไร?", options:["ทำให้อีกคนยิ้ม","เก็บความทรงจำเพิ่ม","ทั้งสองข้อเลย"], answer:2, note:"ข้อนี้ตั้งใจให้ตอบข้อสุดท้าย 😎"}
+];
+let current=0, score=0, answered=[];
+function go(id){document.querySelectorAll('section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='quiz')renderQuestion();}
+function showHint(){document.getElementById('hint').textContent="คำใบ้: ไม่มีคะแนนติดลบหรอก คนทำเว็บแค่อยากให้เพชรเล่นจนจบ ♥";}
+function renderQuestion(){
+ const area=document.getElementById('questionArea');
+ if(current>=questions.length){go('rewards');return;}
+ const q=questions[current];document.getElementById('quizProgress').style.width=((current)/questions.length*100)+'%';
+ area.innerHTML=`<div class="card"><div class="qnum">${q.q}</div><h2>${q.q.split('// ')[1]}</h2><div class="options">${q.options.map((o,i)=>`<button onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div><div class="feedback" id="answerFeedback"></div></div>`;
+}
+function answer(i){
+ if(answered[current])return;answered[current]=true;
+ const q=questions[current];const buttons=document.querySelectorAll('#questionArea .options button');
+ buttons.forEach((b,j)=>{b.disabled=true;if(j===i)b.classList.add('chosen')});
+ const feedback=document.getElementById('answerFeedback');
+ if(i===q.answer){score++;feedback.textContent="ตอบถูก! ความทรงจำยังอยู่ในระบบ 💚";}
+ else{feedback.textContent="รับทราบคำตอบแล้ว 😎 ภารกิจนี้ไม่มีการหักคะแนน";}
+ const next=document.createElement('button');next.style.marginTop='12px';next.textContent=current===questions.length-1?'OPEN REWARDS →':'NEXT QUESTION →';next.onclick=()=>{current++;renderQuestion()};feedback.appendChild(document.createElement('br'));feedback.appendChild(next);
+ document.getElementById('quizProgress').style.width=((current+1)/questions.length*100)+'%';
+}
+const rewards=[
+ "🎟️ COUPON UNLOCKED: มีสิทธิ์เลือกของกินในเดตหน้า 1 ครั้ง ",
+ "🍰 SWEET BONUS: เลือกของแต่งรถได้ 1 อย่าง (ภายในงบที่ตกลงกันนะ)",
+ "💌 SECRET ITEM: สิทธิ์ขอคำชมจากคนทำเว็บ 1 ครั้ง — แต่จริง ๆ อยากให้ชมบ่อยๆกว่านั้น อุอิ"
+];
+function openReward(i,el){document.querySelectorAll('.reward').forEach(b=>b.classList.remove('opened'));el.classList.add('opened');const box=document.getElementById('rewardText');box.style.display='block';box.innerHTML='<span class="green">ITEM ACQUIRED ✓</span><p>'+rewards[i]+'</p>'; }
+function previewPhoto(e){const file=e.target.files&&e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{const img=document.getElementById('photoPreview');img.src=ev.target.result;img.style.display='block';document.getElementById('photoPlaceholder').style.display='none'};reader.readAsDataURL(file);}
+function confetti(){document.getElementById('hugMessage').textContent="ส่งกอดเสมือนให้แล้ว 1 ครั้ง! (กอดจริงต้องขออนุญาตเจ้าของก่อนนะ 🤏💗)";for(let i=0;i<18;i++){const h=document.createElement('span');h.textContent=['♥','♡','✦'][i%3];h.style.cssText=`position:fixed;left:${Math.random()*100}%;top:${Math.random()*75+10}%;font-size:${16+Math.random()*22}px;color:${['#ff78c8','#80ffb0','#80e7ff'][i%3]};pointer-events:none;z-index:99;transition:transform 1.2s,opacity 1.2s`;document.body.appendChild(h);requestAnimationFrame(()=>{h.style.transform=`translateY(-100px) rotate(${Math.random()*100}deg)`;h.style.opacity='0'});setTimeout(()=>h.remove(),1300)}}
+</script>
+</body>
+</html>
